@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.Models;
 using PhoneBook.Repositories;
+using PhoneBook.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,7 +16,7 @@ namespace PhoneBook.Controllers
 
         private readonly SourceManager _manager = new SourceManager();
 
-        public IActionResult Index(int page = 1, string filterLastName = "")
+        public IActionResult Index(int page = 1, int linesPerPage = 10, string filterLastName = "")
         {
             //var manager = new SourceManager();
             var list = _manager.Get(1,1);
@@ -25,20 +26,33 @@ namespace PhoneBook.Controllers
                 list = list.Where(x => !string.IsNullOrEmpty(x.LastName) && x.LastName.ToLower().StartsWith(filterLastName.ToLower())).ToList();
             }
 
-            int linesPerPage = 10;
+            /*liczba wpisów na stronie*/
+            //int linesPerPage = 10;
 
             var numOfPages = (int)Math.Ceiling((decimal) list.Count / (decimal) linesPerPage);
 
             page = page < 1 ? 1 : page > numOfPages ? numOfPages : page;
 
             ViewBag.NumberOfRows = list.Count;
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = numOfPages;
+            //ViewBag.CurrentPage = page;
+            //ViewBag.TotalPages = numOfPages;
             ViewBag.FilterLastName = filterLastName;
+            ViewBag.LinesPerPage = linesPerPage;
 
             list = list.Skip((page - 1) * linesPerPage).Take(linesPerPage).ToList();
-            
-            return View(list);
+
+            var personViewModel = new PersonViewModel()
+            {
+                NumberOfRows = list.Count,
+                CurrentPage = page,
+                TotalPages = numOfPages,
+                FilterLastName = filterLastName,
+                LinesPerPage = linesPerPage,
+                PersonList = list
+            };
+
+            //return View(list);
+            return View(personViewModel);
         }
 
         [HttpGet]

@@ -31,6 +31,7 @@
                 </ul>
                 <form asp-action="Index" asp-controller="Person" asp-route-page="1" method="get" class="form-inline my-2 my-lg-0">
                     <input type="text" name="filterLastName" class="form-control mr-sm-2" placeholder="Wyszukaj Nazwisko" value="@ViewBag.FilterLastName" />
+                    <input type="hidden" name="linesPerPage" value="@ViewBag.LinesPerPage" />
                     <input type="submit" value="Szukaj" class="btn btn-secondary my-2 my-sm-0" />
                 </form>
             </div>
@@ -38,12 +39,12 @@
     </div>
     <div class="container body-content">
 
-        @if (ViewBag.FilterLastName != "" && ViewBag.NumberOfRows == 0)
+        @if (@ViewBag.FilterLastName != "" && @ViewBag.NumberOfRows == 0)
         {
             <div class="alert alert-dismissible alert-warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <h4 class="alert-heading">Uwaga!</h4>
-                <p class="mb-0">Nie odnaleziono żadnych wpisów z nazwiskami zaczynającymi się od: @ViewBag.FilterLastName</p>
+                <p class="mb-0">Nie odnaleziono żadnych wpisów z nazwiskami zaczynającymi się od: <b>@ViewBag.FilterLastName</b></p>
             </div>
         }
 

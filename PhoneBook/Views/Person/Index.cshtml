@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PhoneBook.Models.PersonModel>
+﻿@model PhoneBook.ViewModels.PersonViewModel
 
 <h2>Książka adresowa</h2>
 
@@ -7,7 +7,7 @@
             <form asp-action="Index" asp-controller="Person" method="get">
                 <div class="form-group">
                     <label class="control-label">Wyszukaj Nazwisko</label>
-                    <input type="text" name="filterLastName" class="form-control" value="@ViewBag.FilterLastName" />
+                    <input type="text" name="filterLastName" class="form-control" value="@Model.FilterLastName" />
                     <input type="hidden" name="page" value="1" />
                 </div>
                 <div class="form-group">
@@ -17,38 +17,48 @@
         </div>
     </div>*@
 
-<p>
+<p class="d-inline-block">
     <a asp-action="Add" asp-controller="Person" class="btn btn-primary">Dodaj nowy</a>
 </p>
+<div class="d-inline-block float-right">
+    <form action="/Person/Index" method="get" class="form-inline">
+        <label>Liczba wierszy: </label>
+        <input type="hidden" name="page" value="1" />
+        <input type="hidden" name="filterLastName" value="@Model.FilterLastName" />
+        <input type="number" name="linesPerPage" value="@Model.LinesPerPage" min="10" max="50" step="10"/>
+        <input type="submit" value="zastosuj" class="btn btn-primary btn-sm" />
+    </form>
+</div>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.DummyPerson.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.DummyPerson.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.DummyPerson.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                @Html.DisplayNameFor(model => model.DummyPerson.Phone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.DummyPerson.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
+                @Html.DisplayNameFor(model => model.DummyPerson.Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Updated)
+                @Html.DisplayNameFor(model => model.DummyPerson.Updated)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.PersonList)
         {
             <tr>
                 <td>
@@ -82,56 +92,57 @@
     <tfoot>
         <tr>
             <td colspan="8" class="text-center">
-                <div class="btn-group" role="group" aria-label="pagination" style="display:inline-block">
+                <div class="btn-group d-inline-block" role="group" aria-label="pagination" >
 
-                    <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage - 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default @((int)ViewBag.CurrentPage == 1 ? "disabled" : "")">&laquo;</a>
+                    <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)Model.CurrentPage - 1)" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class="btn btn-default @((int)Model.CurrentPage == 1 ? "disabled" : "")">&laquo;</a>
 
-                    @if ((int)ViewBag.TotalPages < 8)
+                    @if ((int)Model.TotalPages < 8)
                     {
-                        for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+                        for (int i = 1; i <= (int)Model.TotalPages; i++)
                         {
-                            <a asp-action="Index" asp-controller="Person" asp-route-page="@i" asp-route-filterLastName="@ViewBag.FilterLastName" class=@(@i == (int)ViewBag.CurrentPage ? "btn btn-primary" : "btn btn-default")>@i</a>
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@i" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class=@(@i == (int)Model.CurrentPage ? "btn btn-primary" : "btn btn-default")>@i</a>
                         }
                     }
 
-                    @if ((int)ViewBag.TotalPages >= 8)
+                    @if ((int)Model.TotalPages >= 8)
                     {
-                        if ((int)ViewBag.CurrentPage >= 3)
+                        if ((int)Model.CurrentPage >= 3)
                         {
-                            <a asp-action="Index" asp-controller="Person" asp-route-page="1" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">1</a>
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="1" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class="btn btn-default">1</a>
                         }
-                        if ((int)ViewBag.CurrentPage >= 4)
+                        if ((int)Model.CurrentPage >= 4)
                         {
                             <a class="btn btn-default">..</a>
                         }
-                        if ((int)ViewBag.CurrentPage >= 2)
+                        if ((int)Model.CurrentPage >= 2)
                         {
-                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage - 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">@((int)ViewBag.CurrentPage - 1)</a>
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)Model.CurrentPage - 1)" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class="btn btn-default">@((int)Model.CurrentPage - 1)</a>
                         }
 
-                        <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-primary">@((int)ViewBag.CurrentPage)</a>
+                        <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)Model.CurrentPage)" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class="btn btn-primary">@((int)Model.CurrentPage)</a>
 
-                        if ((int)ViewBag.CurrentPage <= (int)ViewBag.TotalPages - 1)
+                        if ((int)Model.CurrentPage <= (int)Model.TotalPages - 1)
                         {
-                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage + 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">@((int)ViewBag.CurrentPage + 1)</a>
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)Model.CurrentPage + 1)" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class="btn btn-default">@((int)Model.CurrentPage + 1)</a>
                         }
-                        if ((int)ViewBag.CurrentPage <= (int)ViewBag.TotalPages - 3)
+                        if ((int)Model.CurrentPage <= (int)Model.TotalPages - 3)
                         {
                             <a class="btn btn-default">..</a>
                         }
-                        if ((int)ViewBag.CurrentPage <= (int)ViewBag.TotalPages - 2)
+                        if ((int)Model.CurrentPage <= (int)Model.TotalPages - 2)
                         {
-                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.TotalPages)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">@((int)ViewBag.TotalPages)</a>
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)Model.TotalPages)" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class="btn btn-default">@((int)Model.TotalPages)</a>
                         }
                     }
 
-                    <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage + 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default @((int)ViewBag.CurrentPage == (int)ViewBag.TotalPages ? "disabled" : "")">&raquo;</a>
+                    <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)Model.CurrentPage + 1)" asp-route-filterLastName="@Model.FilterLastName" asp-route-linesPerPage="@Model.LinesPerPage" class="btn btn-default @((int)Model.CurrentPage == (int)Model.TotalPages ? "disabled" : "")">&raquo;</a>
                 </div>
-                <div style="display:inline-block; float:right">
+                <div class="d-inline-block float-right">
                     <form action="/Person/Index" method="get" class="form-inline">
                         <input type="submit" value="Idż do" class="btn btn-primary btn-sm" />
-                        <input type="number" name="page" class="form-control form-control-sm col-sm-5" value="" />
-                        <input type="hidden" name="filterLastName" value="@ViewBag.FilterLastName" />
+                        <input type="number" name="page" class="form-control form-control-sm" value="" min="1" max="@Model.TotalPages" />
+                        <input type="hidden" name="filterLastName" value="@Model.FilterLastName" />
+                        <input type="hidden" name="linesPerPage" value="@Model.LinesPerPage" />
                     </form>
                 </div>
             </td>
@@ -140,9 +151,9 @@
 </table>
 
 @*<div class="btn-group" role="group" aria-label="Strony">
-        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+        @for (int i = 1; i <= (int)Model.TotalPages; i++)
         {
-            if (@i == ViewBag.CurrentPage)
+            if (@i == Model.CurrentPage)
             {
                 <a asp-action="Index" asp-controller="Person" asp-route-page="@i" class=" btn btn-primary">@i</a>
             }

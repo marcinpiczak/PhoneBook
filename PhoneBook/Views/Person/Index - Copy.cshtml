@@ -1,0 +1,155 @@
+﻿@model IEnumerable<PhoneBook.Models.PersonModel>
+
+<h2>Książka adresowa</h2>
+
+@*<div class="row">
+        <div class="col-6 offset-3">
+            <form asp-action="Index" asp-controller="Person" method="get">
+                <div class="form-group">
+                    <label class="control-label">Wyszukaj Nazwisko</label>
+                    <input type="text" name="filterLastName" class="form-control" value="@ViewBag.FilterLastName" />
+                    <input type="hidden" name="page" value="1" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Wyszukaj" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+<p>
+    <a asp-action="Add" asp-controller="Person" class="btn btn-primary">Dodaj nowy</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Usuń", "Remove", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <div class="btn-group" role="group" aria-label="pagination" style="display:inline-block">
+
+                    <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage - 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default @((int)ViewBag.CurrentPage == 1 ? "disabled" : "")">&laquo;</a>
+
+                    @if ((int)ViewBag.TotalPages < 8)
+                    {
+                        for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+                        {
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@i" asp-route-filterLastName="@ViewBag.FilterLastName" class=@(@i == (int)ViewBag.CurrentPage ? "btn btn-primary" : "btn btn-default")>@i</a>
+                        }
+                    }
+
+                    @if ((int)ViewBag.TotalPages >= 8)
+                    {
+                        if ((int)ViewBag.CurrentPage >= 3)
+                        {
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="1" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">1</a>
+                        }
+                        if ((int)ViewBag.CurrentPage >= 4)
+                        {
+                            <a class="btn btn-default">..</a>
+                        }
+                        if ((int)ViewBag.CurrentPage >= 2)
+                        {
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage - 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">@((int)ViewBag.CurrentPage - 1)</a>
+                        }
+
+                        <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-primary">@((int)ViewBag.CurrentPage)</a>
+
+                        if ((int)ViewBag.CurrentPage <= (int)ViewBag.TotalPages - 1)
+                        {
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage + 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">@((int)ViewBag.CurrentPage + 1)</a>
+                        }
+                        if ((int)ViewBag.CurrentPage <= (int)ViewBag.TotalPages - 3)
+                        {
+                            <a class="btn btn-default">..</a>
+                        }
+                        if ((int)ViewBag.CurrentPage <= (int)ViewBag.TotalPages - 2)
+                        {
+                            <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.TotalPages)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default">@((int)ViewBag.TotalPages)</a>
+                        }
+                    }
+
+                    <a asp-action="Index" asp-controller="Person" asp-route-page="@((int)ViewBag.CurrentPage + 1)" asp-route-filterLastName="@ViewBag.FilterLastName" class="btn btn-default @((int)ViewBag.CurrentPage == (int)ViewBag.TotalPages ? "disabled" : "")">&raquo;</a>
+                </div>
+                <div style="display:inline-block; float:right">
+                    <form action="/Person/Index" method="get" class="form-inline">
+                        <input type="submit" value="Idż do" class="btn btn-primary btn-sm" />
+                        <input type="number" name="page" class="form-control form-control-sm col-sm-5" value="" />
+                        <input type="hidden" name="filterLastName" value="@ViewBag.FilterLastName" />
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+@*<div class="btn-group" role="group" aria-label="Strony">
+        @for (int i = 1; i <= (int)ViewBag.TotalPages; i++)
+        {
+            if (@i == ViewBag.CurrentPage)
+            {
+                <a asp-action="Index" asp-controller="Person" asp-route-page="@i" class=" btn btn-primary">@i</a>
+            }
+            else
+            {
+                <a asp-action="Index" asp-controller="Person" asp-route-page="@i" class=" btn btn-default">@i</a>
+            }
+
+        }
+    </div>*@
