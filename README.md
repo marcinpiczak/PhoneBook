@@ -27,7 +27,7 @@ Sample data contains:
     
 ## Available modules:
 
-### main module
+### Main module
 
 Application allows for creation, modification, deletion, filtering and browsing all entries in phone book. New entry must contain at least first name and phone number.
 

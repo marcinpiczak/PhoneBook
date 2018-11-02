@@ -27,7 +27,7 @@ Przykładowe dane zawierają:
     
 ## Dostępne moduły:
 
-### główny moduł
+### Główny moduł
 
 Aplikacja pozwala na tworzenie, modyfikowani, usuwanie, filtorwanie i przeglądanie stworzonych wpisów. Każdy nowy wpis musi mieć uzupełnione przynajmniej imię i numer telefonu.
 
