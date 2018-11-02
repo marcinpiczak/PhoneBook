@@ -1,3 +1,5 @@
+use PhoneBookDb
+
 insert into People (FirstName, LastName, Email, Phone, Created, Updated) values ('Joachim', 'Clemson', 'jclemson0@drupal.org', '1762165520', '2017-10-07 03:27:24', '2018-02-23 23:54:44');
 insert into People (FirstName, LastName, Email, Phone, Created, Updated) values ('Jemmie', 'Asken', 'jasken1@t.co', '4913331980', '2018-02-06 03:00:54', '2017-12-18 22:11:59');
 insert into People (FirstName, LastName, Email, Phone, Created, Updated) values ('Cristen', 'Setch', 'csetch2@apache.org', '5471062934', '2017-09-03 14:40:31', '2017-08-07 08:59:16');

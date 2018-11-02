@@ -11,7 +11,7 @@ namespace PhoneBook.Repositories
     public class SourceManager
     {
         private const string _connectionString = "Integrated Security=SSPI;" +
-                                                 "Initial Catalog=PhoneBook;" +
+                                                 "Initial Catalog=PhoneBookDb;" +
                                                  "Data Source=.\\SQLEXPRESS;";
 
         private readonly SqlConnection _conn = new SqlConnection(_connectionString);
