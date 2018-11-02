@@ -58,7 +58,8 @@ namespace PhoneBook.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View(new PersonModel());
+            //return View(new PersonModel());
+            return View();
         }
 
         [HttpPost]
@@ -89,8 +90,8 @@ namespace PhoneBook.Controllers
             try
             {
                 var person = _manager.GetByID(id);
-                var now = DateTime.Now;
-                person.Updated = now;
+                //var now = DateTime.Now;
+                //person.Updated = now;
                 return View(person);
             }
             catch (Exception e)
@@ -110,6 +111,8 @@ namespace PhoneBook.Controllers
             //var manager = new SourceManager();
             try
             {
+                var now = DateTime.Now;
+                personModel.Updated = now;
                 _manager.Update(personModel);
                 return RedirectToAction("Index");
             }
