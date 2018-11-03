@@ -2,6 +2,12 @@
 
 *Read this in other languages: [Polish](README.pl-PL.md)
 
+### Technologies
+ASP.NET Core 2.1 MVC, C#, JQuery, CSS, MS SQL Server
+
+### Libraries/Frameworks
+EntityFarmework Core, Identity, Bootstrap
+
 ## Installation:
 
 In order to run the application, a MS SQL database is required. New database can be created or can be restored from provided backup with sample data.
