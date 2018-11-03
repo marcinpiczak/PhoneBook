@@ -2,6 +2,12 @@
 
 PhoneBook jest prostą aplikacją służącą jako internetowa książka telefoniczna.
 
+### Technologie
+ASP.NET Core 2.1 MVC, C#, JQuery, CSS, MS SQL Server
+
+### Biblioteki/Frameworki
+EntityFarmework Core, Identity, Bootstrap
+
 ## Instalacja:
 
 W celu uruchomienia aplikacji należy stworzyć nową bazę danych lub odtworzyć bazę z przykładowymi danymi.
