@@ -38,7 +38,7 @@ Aplikacja pozwala na tworzenie, modyfikowani, usuwanie, filtorwanie i przegląda
 * Przeglądanie istniejących wpisów
 * Filtorwanie danych po nazwisku
 
-## Application:
+## Korzystanie z aplikacji:
 
 Do skorzystania z aplikacji użytkownicy nie potrzebują żadnych specjalnych uprawnień. Wszyscy uzytkownicy posiadają dostęp do dostepnych funkcjonalności bez żadnych ograniczeń. 
 
